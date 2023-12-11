@@ -33,17 +33,21 @@ def find_shortest_path(graph, table, origin):
             pass 
         else: 
             unvisited_nodes = set(adjacent_nodes).difference(set(visited_nodes)) 
+            print("unvisited nodes",unvisited_nodes)
             for vertex in unvisited_nodes: 
                 distance_from_starting_node = get_shortest_distance(table, vertex) 
                 if distance_from_starting_node == INFINITY and current_node == starting_node: 
                     total_distance = get_distance(graph, vertex, current_node) 
+                    print("1 - vertex {}\tdistance {}".format(vertex, total_distance))
                 else: 
                     total_distance = get_shortest_distance (table, 
                     current_node) + get_distance(graph, current_node, vertex) 
+                    print("2 - vertex {}\tdistance {}".format(vertex, total_distance))
                 if total_distance < distance_from_starting_node: 
                     set_shortest_distance(table, vertex, total_distance) 
                     set_previous_node(table, vertex, current_node) 
         visited_nodes.append(current_node) 
+        print("Visited Nodes: {}".format(visited_nodes))
         #print(visited_nodes)
         if len(visited_nodes) == len(table.keys()): 
             break 
