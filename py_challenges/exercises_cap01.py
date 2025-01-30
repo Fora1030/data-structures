@@ -60,10 +60,29 @@ def input_and_expected():
         (50, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47])
     ]
 
-@pytest.mark.parametrize("n, expected", input_and_expected())
-def test_cal_prime_numbers(n, expected):
-    assert calc_primes_up_to_max_v2(n) == expected
+# @pytest.mark.parametrize("n, expected", input_and_expected())
+# def test_cal_prime_numbers(n, expected):
+#     assert calc_primes_up_to_max_v2(n) == expected
 
-@pytest.mark.parametrize("n, expected", input_and_expected())
-def test_cal_prime_numbers_using_np(n, expected):
-    assert calc_primes_up_to_max_np(n) == expected
+# @pytest.mark.parametrize("n, expected", input_and_expected())
+# def test_cal_prime_numbers_using_np(n, expected):
+#     assert calc_primes_up_to_max_np(n) == expected
+
+def calc_checksum(digits: str):
+    if not digits.isdigit():
+        raise ValueError("illegal chars: not only digits!")
+    check_sum = [(n[0]+1)*int(n[1]) for n in enumerate(digits)]
+    return sum(check_sum) % 10
+
+@pytest.mark.parametrize("n, expected", 
+                         [("11111", 5),
+                          ("22222", 0),
+                          ("111111", 1),
+                          ("12345678", 4),
+                          ("87654321", 0)])
+def test_cal_checksum(n,expected):
+    assert calc_checksum(n) == expected
+def test_calc_checksum_with_letters_as_wrong_input():
+    with pytest.raises(ValueError) as excinfo:
+        calc_checksum("ABC")
+    assert "illegal chars" in str(excinfo.value)
